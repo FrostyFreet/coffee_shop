@@ -6,6 +6,7 @@ import Cafetiere from "./pages/Cafetiere.jsx";
 import HomePage from "./pages/HomePage.jsx";
 
 function App() {
+    const apiKey = import.meta.env.VITE_API_KEY;
     const[response,setResponse]=useState([])
     const[cartItems,setCartItems]=useState([])
     const[searchTerm,setSearchTerm]=useState('')
@@ -13,7 +14,7 @@ function App() {
     useEffect(()=>{
         const fetchData = async () => {
             try {
-                const { data } = await axios.get('https://fake-coffee-api.vercel.app/api');
+                const { data } = await axios.get(apiKey);
                 const updatedData = data.map(item => ({
                     ...item,
                     stock: 10
