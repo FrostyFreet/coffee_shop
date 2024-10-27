@@ -1,6 +1,4 @@
 import {useEffect, useState} from 'react';
-import Navbar from './components/Navbar.jsx';
-import Footer from './components/Footer.jsx';
 import axios from 'axios'
 import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import WholeBeans from "./pages/WholeBeans.jsx";
@@ -37,11 +35,11 @@ function App() {
         },
         {
             path: "/WholeBeans",
-            element: <WholeBeans items={response}  cartItems={cartItems} setCartItems={setCartItems} />,
+            element: <WholeBeans items={response} setItems={setResponse} cartItems={cartItems} setCartItems={setCartItems} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />,
         },
         {
             path: "/Cafetiere",
-            element: <Cafetiere items={response} cartItems={cartItems} setCartItems={setCartItems} />,
+            element: <Cafetiere items={response} setItems={setResponse} cartItems={cartItems} setCartItems={setCartItems} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />,
         }
     ]);
 

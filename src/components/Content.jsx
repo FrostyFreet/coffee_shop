@@ -3,12 +3,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBox, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import LazyLoad from 'react-lazyload';
+import {useLocation} from "react-router";
 
-export default function Content({ items,setItems,cartItems,setCartItems,searchTerm }) {
+export default function Content({ items,setItems,cartItems,setCartItems,searchTerm}) {
+    const location=useLocation();
 
-    const filteredItems = items.filter(item =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    let filteredItems = location.pathname === "/"
+        ? items.filter(item => item.name && item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+        : items;
 
     const addToCart = (item) => {
         if (item.stock > 0) {
@@ -26,13 +28,13 @@ export default function Content({ items,setItems,cartItems,setCartItems,searchTe
     };
 
     return (
-        <div className="container">
+        <div className="container mt-4">
             <div className="row">
-                {filteredItems.map((item) => (
+                {filteredItems .map((item) => (
                     <div className="col-md-3 col-sm-4 mb-4" key={item._id}>
-                        <div className="card h-100" style={{ color: "#FFFFF" }}>
+                        <div className="card h-100" style={{ color: "#FFFFF"}}>
                             <LazyLoad height={200} offset={100}>
-                                <img src={item.image_url} className="card-img-top" alt={item.name} />
+                                <img src={item.image_url} className="card-img-top" alt={item.name}  />
                             </LazyLoad>
                             <div className="card-body d-flex flex-column">
                                 <h5 className="card-title">{item.name}</h5>

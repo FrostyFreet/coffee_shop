@@ -13,9 +13,6 @@ export default function Navbar({cartItems,searchTerm,setSearchTerm}) {
     function searchSubmit(e){
         e.preventDefault()
 
-
-
-        console.log("Searchterm:"+searchTerm)
     }
     return(
         <>
@@ -47,14 +44,28 @@ export default function Navbar({cartItems,searchTerm,setSearchTerm}) {
 
                 </div>
 
-                <form className="form-inline my-2 my-lg-0 me-lg-5" onSubmit={searchSubmit}>
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" value={searchTerm} onChange={searchBar}/>
-                    <button className="btn btn-outline-success my-2 my-sm-0 me-lg-5" type="submit">Search</button>
+                <form className="d-flex form-inline me-lg-5" onSubmit={searchSubmit}>
+                    <input
+                        className="form-control me-2"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        style={{height: '45px', width: '200px'}} // Adjust width as needed
+                        value={searchTerm}
+                        onChange={searchBar}
+                    />
+                    <button
+                        className="btn btn-outline-secondary text-white"
+                        style={{backgroundColor: "#B7999C", height: '45px'}} // Match height to input
+                        type="submit"
+                    >
+                        Search
+                    </button>
                 </form>
 
-                <div className="dropdown me-2 mt-4" style={{position: "relative"}}>
+                <div className="dropdown me-2 mt-0 text" style={{position: "relative"}}>
                     <button
-                        style={{backgroundColor: "#B7999C"}}
+                        style={{backgroundColor: "#B7999C", height: '45px'}} // Match height to input
                         className="btn btn-secondary dropdown-toggle"
                         type="button"
                         id="dropdownMenuButton"
