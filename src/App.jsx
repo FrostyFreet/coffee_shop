@@ -6,7 +6,7 @@ import Cafetiere from "./pages/Cafetiere.jsx";
 import HomePage from "./pages/HomePage.jsx";
 
 function App() {
-    const apiKey = import.meta.env.VITE_API_KEY;
+    const apiKey = "https://fake-coffee-api.vercel.app/api";
     const[response,setResponse]=useState([])
     const[cartItems,setCartItems]=useState([])
     const[searchTerm,setSearchTerm]=useState('')
