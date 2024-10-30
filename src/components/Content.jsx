@@ -15,8 +15,6 @@ export default function Content({ items,setItems,cartItems,setCartItems,searchTe
     const addToCart = (item) => {
         if (item.stock > 0) {
             setCartItems([...cartItems, item]);
-
-
             const updatedItems = items.map((i) => {
                 if (i._id === item._id) {
                     return { ...i, stock: i.stock - 1 };
@@ -26,11 +24,10 @@ export default function Content({ items,setItems,cartItems,setCartItems,searchTe
             setItems(updatedItems)
         }
     };
-
     return (
         <div className="container mt-4">
             <div className="row">
-                {filteredItems .map((item) => (
+                {filteredItems.map((item) => (
                     <div className="col-md-3 col-sm-4 mb-4" key={item._id}>
                         <div className="card h-100" style={{ color: "#FFFFF"}}>
                             <LazyLoad height={200} offset={100}>

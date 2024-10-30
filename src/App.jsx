@@ -4,6 +4,7 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import WholeBeans from "./pages/WholeBeans.jsx";
 import Cafetiere from "./pages/Cafetiere.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import Checkout from './pages/Checkout.jsx';
 
 function App() {
     const apiKey = "https://fake-coffee-api.vercel.app/api";
@@ -32,7 +33,7 @@ function App() {
         {
             path: "/",
             element: <HomePage items={response} setItems={setResponse} setCartItems={setCartItems} cartItems={cartItems} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />,
-            ErrorPath: "/404",
+            errorElement:<div>Page not found</div>
         },
         {
             path: "/WholeBeans",
@@ -41,6 +42,10 @@ function App() {
         {
             path: "/Cafetiere",
             element: <Cafetiere items={response} setItems={setResponse} cartItems={cartItems} setCartItems={setCartItems} setSearchTerm={setSearchTerm} searchTerm={searchTerm} />,
+        },
+        {
+            path:"/Checkout",
+            element:<Checkout cartItems={cartItems} setCartItems={setCartItems}/>
         }
     ]);
 

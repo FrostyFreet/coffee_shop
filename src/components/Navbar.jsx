@@ -5,7 +5,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import {Link} from "react-router-dom";
 
-export default function Navbar({cartItems,searchTerm,setSearchTerm}) {
+export default function Navbar({cartItems=[],setCartItems,searchTerm,setSearchTerm}) {
 
     function searchBar(e){
         setSearchTerm(e.target.value)
@@ -14,6 +14,36 @@ export default function Navbar({cartItems,searchTerm,setSearchTerm}) {
         e.preventDefault()
 
     }
+    function removeElement(id) {
+        console.log(id);
+        const index = cartItems.findIndex(item => item.id === id);
+        console.log(index);
+        
+        if (index > -1) {
+            const newCartItems = [...cartItems];
+            const item = newCartItems[index];
+
+            if (item.quantity > 1) {
+                item.quantity -= 1;// Decrease quantity
+                console.log(`Decreased quantity of ${item.name} to ${item.quantity}`);
+            } else {
+                newCartItems.splice(index, 1); // Remove the item
+                console.log(`${item.name} removed from cart`);
+            }
+
+            setCartItems(newCartItems); // Update state
+        }
+    }
+
+    const itemMap = cartItems.reduce((acc, item) => {
+        if (acc[item.id]) {
+            acc[item.id].quantity += 1;
+        } else {
+            acc[item.id] = { ...item, quantity: 1 };
+        }
+        return acc;
+    }, {});
+    const uniqueItems = Object.values(itemMap);
     return(
         <>
             <nav className="navbar navbar-expand-lg pb-3 pt-3 " style={{backgroundColor: "#B7999C"}}>
@@ -76,22 +106,38 @@ export default function Navbar({cartItems,searchTerm,setSearchTerm}) {
                         <FontAwesomeIcon icon={faShoppingCart}/> Cart
                     </button>
                     <div className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        {cartItems.length > 0 ?
+                        {uniqueItems.length > 0 ?
                             (
                                 <ul>
-                                    {cartItems.map((cartItem, index) => (
+                                    {uniqueItems.map((cartItem, index) => (
                                         <li className="dropdown-item" key={`${cartItem._id}-${index}`}>
-                                            <img src={cartItem.image_url}
-                                                 style={{width: "100px", height: "100px"}}/> {cartItem.name} -
-                                            ${cartItem.price}
+                                            <img src={cartItem.image_url}style={{width: "100px", height: "100px"}}/> 
+                                            {cartItem.name} -${cartItem.price} Quantity:{cartItem.quantity}
+                                            
+                                             <button style={{
+                                                    background: "transparent",
+                                                    border: "none",
+                                                    marginLeft: "15px",
+                                                    color: "black",
+                                                    fontSize: "24px",
+                                                }} onClick={()=>removeElement(cartItem.id)}
+                                            >X</button>
+
+
+
                                         </li>
-                                    ))}
-                                    Total={cartItems.reduce((acc, item) => acc + item.price, 0)}
+                                    ))
+                                    }
+                                    <b>Total</b>={cartItems.reduce((acc, item) => acc + item.price,0).toFixed(2)}
+                                    
+                                    <Link to={"/Checkout"}>
+                                    <button className="btn btn-primary" style={{ marginBottom:"15px",marginRight:"10px",float:"right"}}>Checkout</button></Link>
                                 </ul>
 
-                            ) : (<span className="dropdown-item disabled">Your cart is empty</span>)
+                            ) : (<span className="dropdown-item disabled">Your cart is empty</span>)                       
                         }
-
+                        
+                        
                     </div>
 
 
